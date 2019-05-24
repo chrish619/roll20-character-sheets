@@ -65,6 +65,8 @@
             <input class="num" type="text" name="attr_wisdom_base" value="10">
             <span data-i18n="cha-u">CHA</span>
             <input class="num" type="text" name="attr_charisma_base" value="10">
+            <span data-i18n="san-u">SAN</span>
+            <input class="num" type="text" name="attr_sanity_base" value="10">
         </div>
         <div class="spacer"></div>
         <div class="row">
@@ -83,12 +85,15 @@
             <input class="num" type="text" name="attr_npc_wis_save_base" placeholder="0">
             <span data-i18n="cha-u">CHA</span>
             <input class="num" type="text" name="attr_npc_cha_save_base" placeholder="0">
+            <span data-i18n="san-u">SAN</span>
+            <input class="num" type="text" name="attr_npc_san_save_base" placeholder="0">
             <input type="hidden" name="attr_npc_str_save" value="@{strength_mod}">
             <input type="hidden" name="attr_npc_dex_save" value="@{dexterity_mod}">
             <input type="hidden" name="attr_npc_con_save" value="@{constitution_mod}">
             <input type="hidden" name="attr_npc_int_save" value="@{intelligence_mod}">
             <input type="hidden" name="attr_npc_wis_save" value="@{wisdom_mod}">
             <input type="hidden" name="attr_npc_cha_save" value="@{charisma_mod}">
+            <input type="hidden" name="attr_npc_san_save" value="@{sanity_mod}">
         </div>
         <div class="spacer"></div>
         <div class="row">
@@ -239,6 +244,7 @@
                     <option value="@{intelligence_mod}+" data-i18n="intelligence-u">INTELLIGENCE</option>
                     <option value="@{wisdom_mod}+" data-i18n="wisdom-u">WISDOM</option>
                     <option value="@{charisma_mod}+" data-i18n="charisma-u">CHARISMA</option>
+                    <option value="@{sanity_mod}+" data-i18n="sanity-u">SANITY</option>
                 </select>
             </div>
             <div class="npcspelloptions">
@@ -389,6 +395,14 @@
                     <span class="npcattr" name="attr_charisma_mod"></span>
                 </button>
             </div>
+            <div class="attr-container">
+                <button type="roll" name="roll_npc_san" value="@{wtype}&{template:npc} @{npc_name_flag} {{rname=^{sanity}}} {{mod=[[[[@{sanity_mod}]][SAN]]]}} {{r1=[[@{d20}+[[@{sanity_mod}]][SAN]]]}} @{rtype}+[[@{sanity_mod}]][CHA]]]}} {{type=Ability}}">
+                    <span class="bold" data-i18n="san-u">SAN</span>
+                    <span name="attr_sanity"></span>
+                    <input class="negativeflag" type="hidden" name="attr_npc_san_negative" value="0">
+                    <span class="npcattr" name="attr_sanity_mod"></span>
+                </button>
+            </div>
         </div>
         <div class="triangle"></div>
         <input class="flag" type="hidden" name="attr_npc_saving_flag" value="">
@@ -423,6 +437,11 @@
             <button type="roll" name="roll_npc_cha_save" value="@{wtype}&{template:npc} @{npc_name_flag} {{rname=^{charisma-save}}} {{mod=[[[[@{npc_cha_save}]][CHA SAVE]]]}} {{r1=[[@{d20}+[[@{npc_cha_save}]][CHA SAVE]]]}} @{rtype}+[[@{npc_cha_save}]][CHA SAVE]]]}} {{type=Save}}">
                 <span data-i18n="cha">Cha</span>
                 <span class="stat" name="attr_npc_cha_save"></span>
+            </button>
+            <input class="flag" type="hidden" name="attr_npc_san_save_flag" value="0">
+            <button type="roll" name="roll_npc_san_save" value="@{wtype}&{template:npc} @{npc_name_flag} {{rname=^{sanity-save}}} {{mod=[[[[@{npc_san_save}]][SAN SAVE]]]}} {{r1=[[@{d20}+[[@{npc_san_save}]][SAN SAVE]]]}} @{rtype}+[[@{npc_san_save}]][SAN SAVE]]]}} {{type=Save}}">
+                <span data-i18n="san">San</span>
+                <span class="stat" name="attr_npc_san_save"></span>
             </button>
         </div>
         <input class="flag" type="hidden" name="attr_npc_skills_flag" value="">
@@ -882,6 +901,7 @@
                                         <option value="Intelligence" data-i18n="int-u">INT</option>
                                         <option value="Wisdom" data-i18n="wis-u">WIS</option>
                                         <option value="Charisma" data-i18n="cha-u">CHA</option>
+                                        <option value="Sanity" data-i18n="san-u">SAN</option>
                                     </select>
                                     <span data-i18n="effect:-u">EFFECT:</span>
                                     <input type="text" name="attr_spellsavesuccess" style="width: 78px;" placeholder="Half damage" data-i18n-placeholder="npc-atk-effect-place">
@@ -1082,6 +1102,16 @@
                         <span class="finalattr" name="attr_charisma"></span>
                     </div>
                 </div>
+                <div class="attr-container">
+                    <button type="roll" name="roll_sanity" value="@{wtype}&{template:simple} {{rname=^{sanity-u}}} {{mod=@{sanity_mod}@{jack_bonus}}} {{r1=[[@{d20}+@{sanity_mod}@{jack_attr}[SAN]]]}} @{rtype}+@{sanity_mod}@{jack_attr}[SAN]]]}} @{charname_output}" data-i18n="sanity-u">SANITY</button>
+                    <span class="attr" name="attr_sanity_mod" title="@{sanity_mod}">0</span>
+                    <div class="attr-mod">
+                        <input class="baseattr" type="text" name="attr_sanity_base" title="@{sanity}" value="10">
+                        <input type="hidden" name="attr_sanity" value="10">
+                        <input class="attr-flag" type="hidden" name="attr_sanity_flag" value="0">
+                        <span class="finalattr" name="attr_sanity"></span>
+                    </div>
+                </div>
             </div>
             <div class="skills-saves-container">
                 <div class="insp-prof-container">
@@ -1130,6 +1160,11 @@
                         <input type="checkbox" name="attr_charisma_save_prof" title="@{charisma_save_prof}" value="(@{pb})">
                         <span name="attr_charisma_save_bonus" title="@{charisma_save_bonus}">0</span>
                         <button type="roll" name="roll_charisma_save" value="@{wtype}&{template:simple} {{rname=^{charisma-save-u}}} {{mod=@{charisma_save_bonus}}} {{r1=[[@{d20}+@{charisma_save_bonus}@{pbd_safe}]]}} @{rtype}+@{charisma_save_bonus}@{pbd_safe}]]}} {{global=@{global_save_mod}}} @{charname_output}" data-i18n="charisma">Charisma</button>
+                    </div>
+                    <div class="saving-throw">
+                        <input type="checkbox" name="attr_sanity_save_prof" title="@{sanity_save_prof}" value="(@{pb})">
+                        <span name="attr_sanity_save_bonus" title="@{sanity_save_bonus}">0</span>
+                        <button type="roll" name="roll_sanity_save" value="@{wtype}&{template:simple} {{rname=^{sanity-save-u}}} {{mod=@{sanity_save_bonus}}} {{r1=[[@{d20}+@{sanity_save_bonus}@{pbd_safe}]]}} @{rtype}+@{sanity_save_bonus}@{pbd_safe}]]}} {{global=@{global_save_mod}}} @{charname_output}" data-i18n="sanity">Sanity</button>
                     </div>
                     <input type="hidden" class="toggleflag" name="attr_global_save_mod_flag">
                     <div class="hidden textarea globalattack">
@@ -1297,7 +1332,8 @@
                                     <option value="@{intelligence_mod}" data-i18n="intelligence-u">INTELLIGENCE</option>
                                     <option value="@{wisdom_mod}" data-i18n="wisdom-u">WISDOM</option>
                                     <option value="@{charisma_mod}" data-i18n="charisma-u">CHARISMA</option>
-                                    <option value="?{Attribute?|Strength,@{strength_mod}|Dexterity,@{dexterity_mod}|Constitution,@{constitution_mod}|Intelligence,@{intelligence_mod}|Wisdom,@{wisdom_mod}|Charisma,@{charisma_mod}}" data-i18n="query-attr-u">QUERY ATTRIBUTE</option>
+                                    <option value="@{sanity_mod}" data-i18n="sanity-u">SANITY</option>
+                                    <option value="?{Attribute?|Strength,@{strength_mod}|Dexterity,@{dexterity_mod}|Constitution,@{constitution_mod}|Intelligence,@{intelligence_mod}|Wisdom,@{wisdom_mod}|Charisma,@{charisma_mod}|Sanity,@{sanity_mod}}" data-i18n="query-attr-u">QUERY ATTRIBUTE</option>
                                 </select>
                                 <span data-i18n="mods:-u">MODS:</span>
                                 <input type="text" class="num" name="attr_tool_mod" title="@{tool_mod}" value="0">
@@ -1471,6 +1507,7 @@
                                     <option value="@{intelligence_mod}" data-i18n="int-u">INT</option>
                                     <option value="@{wisdom_mod}" data-i18n="wis-u">WIS</option>
                                     <option value="@{charisma_mod}" data-i18n="cha-u">CHA</option>
+                                    <option value="@{sanity_mod}" data-i18n="san-u">SAN</option>
                                     <option value="spell" data-i18n="spell-u">SPELL</option>
                                     <option value="0">-</option>
                                 </select>
@@ -1502,6 +1539,7 @@
                                     <option value="@{intelligence_mod}" data-i18n="int-u">INT</option>
                                     <option value="@{wisdom_mod}" data-i18n="wis-u">WIS</option>
                                     <option value="@{charisma_mod}" data-i18n="cha-u">CHA</option>
+                                    <option value="@{sanity_mod}" data-i18n="san-u">CHA</option>
                                     <option value="spell" data-i18n="spell-u">SPELL</option>
                                     <option value="0">-</option>
                                 </select>
@@ -1526,6 +1564,7 @@
                                     <option value="@{intelligence_mod}" data-i18n="int-u">INT</option>
                                     <option value="@{wisdom_mod}" data-i18n="wis-u">WIS</option>
                                     <option value="@{charisma_mod}" data-i18n="cha-u">CHA</option>
+                                    <option value="@{sanity_mod}" data-i18n="san-u">SAN</option>
                                     <option value="spell" data-i18n="spell-u">SPELL</option>
                                     <option value="0" selected="selected">-</option>
                                 </select>
@@ -1548,6 +1587,7 @@
                                     <option value="Intelligence" data-i18n="int-u">INT</option>
                                     <option value="Wisdom" data-i18n="wis-u">WIS</option>
                                     <option value="Charisma" data-i18n="cha-u">CHA</option>
+                                    <option value="Sanity" data-i18n="san-u">SAN</option>
                                 </select>
                                 <span data-i18n="vs-dc:-u">VS DC:</span>
                                 <select name="attr_savedc">
@@ -1558,6 +1598,7 @@
                                     <option value="(@{intelligence_mod}+8+@{spell_dc_mod}+@{pb})" data-i18n="int-u">INT</option>
                                     <option value="(@{wisdom_mod}+8+@{spell_dc_mod}+@{pb})" data-i18n="wis-u">WIS</option>
                                     <option value="(@{charisma_mod}+8+@{spell_dc_mod}+@{pb})" data-i18n="cha-u">CHA</option>
+                                    <option value="(@{sanity_mod}+8+@{spell_dc_mod}+@{pb})" data-i18n="san-u">SAN</option>
                                     <option value="(@{saveflat})" data-i18n="flat-u">FLAT</option>
                                 </select>
                                 <input class="flatflag" type="hidden" name="attr_savedc">
@@ -1983,6 +2024,7 @@
                     <option value="@{intelligence_mod}+" data-i18n="intelligence-u">INTELLIGENCE</option>
                     <option value="@{wisdom_mod}+" data-i18n="wisdom-u">WISDOM</option>
                     <option value="@{charisma_mod}+" data-i18n="charisma-u">CHARISMA</option>
+                    <option value="@{sanity_mod}+" data-i18n="sanity-u">SANITY</option>
                 </select>
                 <span class="label" data-i18n="spell-ability-u">SPELLCASTING ABILITY</span>
             </div>
@@ -2073,6 +2115,7 @@
                                     <option value="@{intelligence_mod}+" data-i18n="intelligence-u">INTELLIGENCE</option>
                                     <option value="@{wisdom_mod}+" data-i18n="wisdom-u">WISDOM</option>
                                     <option value="@{charisma_mod}+" data-i18n="charisma-u">CHARISMA</option>
+                                    <option value="@{sanity_mod}+" data-i18n="sanity-u">SANITY</option>
                                 </select>
                             </div>
                             <div class="row">
@@ -2134,6 +2177,7 @@
                                         <option value="Intelligence" data-i18n="int-u">INT</option>
                                         <option value="Wisdom" data-i18n="wis-u">WIS</option>
                                         <option value="Charisma" data-i18n="cha-u">CHA</option>
+                                        <option value="Sanity" data-i18n="san-u">SAN</option>
                                     </select>
                                     <span data-i18n="effect:-u">EFFECT:</span>
                                     <input type="text" name="attr_spellsavesuccess" style="width: 78px;" placeholder="Half damage" data-i18n-placeholder="half-dmg-place">
@@ -2290,6 +2334,7 @@
                                     <option value="@{intelligence_mod}+" data-i18n="intelligence-u">INTELLIGENCE</option>
                                     <option value="@{wisdom_mod}+" data-i18n="wisdom-u">WISDOM</option>
                                     <option value="@{charisma_mod}+" data-i18n="charisma-u">CHARISMA</option>
+                                    <option value="@{sanity_mod}+" data-i18n="sanity-u">SANITY</option>
                                 </select>
                             </div>
                             <div class="row">
@@ -2343,6 +2388,7 @@
                                         <option value="Intelligence" data-i18n="int-u">INT</option>
                                         <option value="Wisdom" data-i18n="wis-u">WIS</option>
                                         <option value="Charisma" data-i18n="cha-u">CHA</option>
+                                        <option value="Sanity" data-i18n="san-u">SAN</option>
                                     </select>
                                     <span data-i18n="effect:-u">EFFECT:</span>
                                     <input type="text" name="attr_spellsavesuccess" style="width: 78px;" placeholder="Half damage" data-i18n-placeholder="half-dmg-place">
@@ -2496,6 +2542,7 @@
                                     <option value="@{intelligence_mod}+" data-i18n="intelligence-u">INTELLIGENCE</option>
                                     <option value="@{wisdom_mod}+" data-i18n="wisdom-u">WISDOM</option>
                                     <option value="@{charisma_mod}+" data-i18n="charisma-u">CHARISMA</option>
+                                    <option value="@{sanity_mod}+" data-i18n="sanity-u">SANITY</option>
                                 </select>
                             </div>
                             <div class="row">
@@ -2549,6 +2596,7 @@
                                         <option value="Intelligence" data-i18n="int-u">INT</option>
                                         <option value="Wisdom" data-i18n="wis-u">WIS</option>
                                         <option value="Charisma" data-i18n="cha-u">CHA</option>
+                                        <option value="Sanity" data-i18n="san-u">SAN</option>
                                     </select>
                                     <span data-i18n="effect:-u">EFFECT:</span>
                                     <input type="text" name="attr_spellsavesuccess" style="width: 78px;" placeholder="Half damage" data-i18n-placeholder="half-dmg-place">
@@ -2705,6 +2753,7 @@
                                     <option value="@{intelligence_mod}+" data-i18n="intelligence-u">INTELLIGENCE</option>
                                     <option value="@{wisdom_mod}+" data-i18n="wisdom-u">WISDOM</option>
                                     <option value="@{charisma_mod}+" data-i18n="charisma-u">CHARISMA</option>
+                                    <option value="@{sanity_mod}+" data-i18n="sanity-u">SANITY</option>
                                 </select>
                             </div>
                             <div class="row">
@@ -2758,6 +2807,7 @@
                                         <option value="Intelligence" data-i18n="int-u">INT</option>
                                         <option value="Wisdom" data-i18n="wis-u">WIS</option>
                                         <option value="Charisma" data-i18n="cha-u">CHA</option>
+                                        <option value="Sanity" data-i18n="san-u">SAN</option>
                                     </select>
                                     <span data-i18n="effect:-u">EFFECT:</span>
                                     <input type="text" name="attr_spellsavesuccess" style="width: 78px;" placeholder="Half damage" data-i18n-placeholder="half-dmg-place">
@@ -2911,6 +2961,7 @@
                                     <option value="@{intelligence_mod}+" data-i18n="intelligence-u">INTELLIGENCE</option>
                                     <option value="@{wisdom_mod}+" data-i18n="wisdom-u">WISDOM</option>
                                     <option value="@{charisma_mod}+" data-i18n="charisma-u">CHARISMA</option>
+                                    <option value="@{sanity_mod}+" data-i18n="sanity-u">SANITY</option>
                                 </select>
                             </div>
                             <div class="row">
@@ -2964,6 +3015,7 @@
                                         <option value="Intelligence" data-i18n="int-u">INT</option>
                                         <option value="Wisdom" data-i18n="wis-u">WIS</option>
                                         <option value="Charisma" data-i18n="cha-u">CHA</option>
+                                        <option value="Sanity" data-i18n="san-u">SAN</option>
                                     </select>
                                     <span data-i18n="effect:-u">EFFECT:</span>
                                     <input type="text" name="attr_spellsavesuccess" style="width: 78px;" placeholder="Half damage" data-i18n-placeholder="half-dmg-place">
@@ -3117,6 +3169,7 @@
                                     <option value="@{intelligence_mod}+" data-i18n="intelligence-u">INTELLIGENCE</option>
                                     <option value="@{wisdom_mod}+" data-i18n="wisdom-u">WISDOM</option>
                                     <option value="@{charisma_mod}+" data-i18n="charisma-u">CHARISMA</option>
+                                    <option value="@{sanity_mod}+" data-i18n="sanity-u">SANITY</option>
                                 </select>
                             </div>
                             <div class="row">
@@ -3170,6 +3223,7 @@
                                         <option value="Intelligence" data-i18n="int-u">INT</option>
                                         <option value="Wisdom" data-i18n="wis-u">WIS</option>
                                         <option value="Charisma" data-i18n="cha-u">CHA</option>
+                                        <option value="Sanity" data-i18n="san-u">SAN</option>
                                     </select>
                                     <span data-i18n="effect:-u">EFFECT:</span>
                                     <input type="text" name="attr_spellsavesuccess" style="width: 78px;" placeholder="Half damage" data-i18n-placeholder="half-dmg-place">
@@ -3326,6 +3380,7 @@
                                     <option value="@{intelligence_mod}+" data-i18n="intelligence-u">INTELLIGENCE</option>
                                     <option value="@{wisdom_mod}+" data-i18n="wisdom-u">WISDOM</option>
                                     <option value="@{charisma_mod}+" data-i18n="charisma-u">CHARISMA</option>
+                                    <option value="@{sanity_mod}+" data-i18n="sanity-u">SANITY</option>
                                 </select>
                             </div>
                             <div class="row">
@@ -3379,6 +3434,7 @@
                                         <option value="Intelligence" data-i18n="int-u">INT</option>
                                         <option value="Wisdom" data-i18n="wis-u">WIS</option>
                                         <option value="Charisma" data-i18n="cha-u">CHA</option>
+                                        <option value="Sanity" data-i18n="san-u">SAN</option>
                                     </select>
                                     <span data-i18n="effect:-u">EFFECT:</span>
                                     <input type="text" name="attr_spellsavesuccess" style="width: 78px;" placeholder="Half damage" data-i18n-placeholder="half-dmg-place">
@@ -3532,6 +3588,7 @@
                                     <option value="@{intelligence_mod}+" data-i18n="intelligence-u">INTELLIGENCE</option>
                                     <option value="@{wisdom_mod}+" data-i18n="wisdom-u">WISDOM</option>
                                     <option value="@{charisma_mod}+" data-i18n="charisma-u">CHARISMA</option>
+                                    <option value="@{sanity_mod}+" data-i18n="sanity-u">SANITY</option>
                                 </select>
                             </div>
                             <div class="row">
@@ -3585,6 +3642,7 @@
                                         <option value="Intelligence" data-i18n="int-u">INT</option>
                                         <option value="Wisdom" data-i18n="wis-u">WIS</option>
                                         <option value="Charisma" data-i18n="cha-u">CHA</option>
+                                        <option value="Sanity" data-i18n="san-u">SAN</option>
                                     </select>
                                     <span data-i18n="effect:-u">EFFECT:</span>
                                     <input type="text" name="attr_spellsavesuccess" style="width: 78px;" placeholder="Half damage" data-i18n-placeholder="half-dmg-place">
@@ -3738,6 +3796,7 @@
                                     <option value="@{intelligence_mod}+" data-i18n="intelligence-u">INTELLIGENCE</option>
                                     <option value="@{wisdom_mod}+" data-i18n="wisdom-u">WISDOM</option>
                                     <option value="@{charisma_mod}+" data-i18n="charisma-u">CHARISMA</option>
+                                    <option value="@{sanity_mod}+" data-i18n="sanity-u">SANITY</option>
                                 </select>
                             </div>
                             <div class="row">
@@ -3791,6 +3850,7 @@
                                         <option value="Intelligence" data-i18n="int-u">INT</option>
                                         <option value="Wisdom" data-i18n="wis-u">WIS</option>
                                         <option value="Charisma" data-i18n="cha-u">CHA</option>
+                                        <option value="Sanity" data-i18n="san-u">SAN</option>
                                     </select>
                                     <span data-i18n="effect:-u">EFFECT:</span>
                                     <input type="text" name="attr_spellsavesuccess" style="width: 78px;" placeholder="Half damage" data-i18n-placeholder="half-dmg-place">
@@ -3944,6 +4004,7 @@
                                     <option value="@{intelligence_mod}+" data-i18n="intelligence-u">INTELLIGENCE</option>
                                     <option value="@{wisdom_mod}+" data-i18n="wisdom-u">WISDOM</option>
                                     <option value="@{charisma_mod}+" data-i18n="charisma-u">CHARISMA</option>
+                                    <option value="@{sanity_mod}+" data-i18n="sanity-u">SANITY</option>
                                 </select>
                             </div>
                             <div class="row">
@@ -3997,6 +4058,7 @@
                                         <option value="Intelligence" data-i18n="int-u">INT</option>
                                         <option value="Wisdom" data-i18n="wis-u">WIS</option>
                                         <option value="Charisma" data-i18n="cha-u">CHA</option>
+                                        <option value="Sanity" data-i18n="san-u">SAN</option>
                                     </select>
                                     <span data-i18n="effect:-u">EFFECT:</span>
                                     <input type="text" name="attr_spellsavesuccess" style="width: 78px;" placeholder="Half damage" data-i18n-placeholder="half-dmg-place">
@@ -4299,6 +4361,7 @@
                         <option value="@{intelligence_mod}+" data-i18n="intelligence-u">INTELLIGENCE</option>
                         <option value="@{wisdom_mod}+" data-i18n="wisdom-u">WISDOM</option>
                         <option value="@{charisma_mod}+" data-i18n="charisma-u">CHARISMA</option>
+                        <option value="@{sanity_mod}+" data-i18n="sanity-u">SANITY</option>
                     </select>
                 </div>
                 <div class="row">
@@ -4336,6 +4399,10 @@
                 <div class="row">
                     <input type="checkbox" name="attr_cust_charisma_save_prof" value="(@{pb})">
                     <span data-i18n="charisma">Charisma</span>
+                </div>
+                <div class="row">
+                    <input type="checkbox" name="attr_cust_sanity_save_prof" value="(@{pb})">
+                    <span data-i18n="sanity">Sanity</span>
                 </div>
                 <div class="row title">
                     <span data-i18n="cust-class-opts">CUSTOM CLASS OPTIONS</span>
@@ -4415,6 +4482,10 @@
                     <span data-i18n="charisma-u">CHARISMA</span>
                     <span>+</span><input type="text" class="num" name="attr_charisma_bonus" value="0" placeholder="0" title="@{charisma_bonus}">
                 </div>
+                <div class="row skill">
+                    <span data-i18n="sanity-u">SANITY</span>
+                    <span>+</span><input type="text" class="num" name="attr_sanity_bonus" value="0" placeholder="0" title="@{sanity_bonus}">
+                </div>
                 <div class="row">
                     <span data-i18n="initiative-mod:-u">INITIATIVE MODIFIER:</span>
                     <input type="text" class="num" name="attr_initmod" placeholder="0" value="0">
@@ -4452,6 +4523,7 @@
                         <option value="Intelligence" data-i18n="int-u">INT</option>
                         <option value="Wisdom" data-i18n="wis-u">WIS</option>
                         <option value="Charisma" data-i18n="cha-u">CHA</option>
+                        <option value="Sanity" data-i18n="san-u">SAN</option>
                     </select>
                     <span>+</span>
                     <select name="attr_custom_ac_part2">
@@ -4462,6 +4534,7 @@
                         <option value="Intelligence" data-i18n="int-u">INT</option>
                         <option value="Wisdom" data-i18n="wis-u">WIS</option>
                         <option value="Charisma" data-i18n="cha-u">CHA</option>
+                        <option value="Sanity" data-i18n="san-u">SAN</option>
                     </select><br>
                     <input type="checkbox" name="attr_custom_ac_shield" value="yes" checked>
                     <span data-i18n="allow-shields-u">ALLOW SHIELDS?</span>
@@ -4514,6 +4587,10 @@
                 <div class="row skill">
                     <span data-i18n="charisma-save-u">Charisma Save</span>
                     <span>+</span><input type="text" class="num" name="attr_charisma_save_mod" value="0" placeholder="0" title="@{charisma_save_mod}">
+                </div>
+                <div class="row skill">
+                    <span data-i18n="sanity-save-u">Sanity Save</span>
+                    <span>+</span><input type="text" class="num" name="attr_sanity_save_mod" value="0" placeholder="0" title="@{sanity_save_mod}">
                 </div>
                 <div class="row">
                     <span data-i18n="death-save-mod:-u">DEATH SAVE MODIFIER:</span>
@@ -4847,6 +4924,7 @@
 <input type="hidden" name="attr_intelligence_mod" value="0">
 <input type="hidden" name="attr_wisdom_mod" value="0">
 <input type="hidden" name="attr_charisma_mod" value="0">
+<input type="hidden" name="attr_sanity_mod" value="0">
 
 <input type="hidden" name="attr_strength_save_bonus" value="0">
 <input type="hidden" name="attr_dexterity_save_bonus" value="0">
@@ -4854,6 +4932,7 @@
 <input type="hidden" name="attr_intelligence_save_bonus" value="0">
 <input type="hidden" name="attr_wisdom_save_bonus" value="0">
 <input type="hidden" name="attr_charisma_save_bonus" value="0">
+<input type="hidden" name="attr_sanity_save_bonus" value="0">
 
 <input type="hidden" name="attr_strength_maximum" value="20">
 <input type="hidden" name="attr_dexterity_maximum" value="20">
@@ -4861,6 +4940,7 @@
 <input type="hidden" name="attr_intelligence_maximum" value="20">
 <input type="hidden" name="attr_wisdom_maximum" value="20">
 <input type="hidden" name="attr_charisma_maximum" value="20">
+<input type="hidden" name="attr_sanity_maximum" value="20">
 
 <input type='hidden' name='attr_acrobatics_bonus' value='0'>
 <input type='hidden' name='attr_animal_handling_bonus' value='0'>
@@ -6193,14 +6273,14 @@
         });
     });
 
-    ['strength','dexterity','constitution','intelligence','wisdom','charisma'].forEach(attr => {
+    ['strength','dexterity','constitution','intelligence','wisdom','charisma','sanity'].forEach(attr => {
         on(`change:${attr}_base change:${attr}_bonus`, function() {
             update_attr(`${attr}`);
 
         });
     });
 
-    ['strength','dexterity','constitution','intelligence','wisdom','charisma'].forEach(attr => {
+    ['strength','dexterity','constitution','intelligence','wisdom','charisma','sanity'].forEach(attr => {
         on(`change:${attr}`, function() {
             update_mod(`${attr}`);
 
@@ -6212,7 +6292,7 @@
         });
     });
 
-    ['strength','dexterity','constitution','intelligence','wisdom','charisma'].forEach(attr => {
+    ['strength','dexterity','constitution','intelligence','wisdom','charisma','sanity'].forEach(attr => {
         on(`change:${attr}_mod`, function() {
             update_save(`${attr}`);
             update_attacks(`${attr}`);
@@ -6243,7 +6323,7 @@
         });
     });
 
-    ['strength','dexterity','constitution','intelligence','wisdom','charisma'].forEach(attr => {
+    ['strength','dexterity','constitution','intelligence','wisdom','charisma','sanity'].forEach(attr => {
         on(`change:${attr}_save_prof change:${attr}_save_mod`, function(eventinfo) {
             if(eventinfo.sourceType === "sheetworker") {return;};
             update_save(`${attr}`);
@@ -6525,7 +6605,7 @@
         setAttrs(update, {silent: true});
     };
 
-    on("change:class change:custom_class change:cust_classname change:cust_hitdietype change:cust_spellcasting_ability change:cust_spellslots change:cust_strength_save_prof change:cust_dexterity_save_prof change:cust_constitution_save_prof change:cust_intelligence_save_prof change:cust_wisdom_save_prof change:cust_charisma_save_prof change:subclass change:multiclass1 change:multiclass1_subclass change:multiclass2 change:multiclass2_subclass change:multiclass3 change:multiclass3_subclass" , function(eventinfo) {
+    on("change:class change:custom_class change:cust_classname change:cust_hitdietype change:cust_spellcasting_ability change:cust_spellslots change:cust_strength_save_prof change:cust_dexterity_save_prof change:cust_constitution_save_prof change:cust_intelligence_save_prof change:cust_wisdom_save_prof change:cust_charisma_save_prof change:cust_sanity_save_prof change:subclass change:multiclass1 change:multiclass1_subclass change:multiclass2 change:multiclass2_subclass change:multiclass3 change:multiclass3_subclass" , function(eventinfo) {
         if(eventinfo.sourceType && eventinfo.sourceType === "sheetworker") {
             return;
         }
@@ -6929,6 +7009,7 @@
         update_save("intelligence");
         update_save("wisdom");
         update_save("charisma");
+        update_save("sanity");
         update_save("death");
     };
 
@@ -7047,7 +7128,7 @@
     };
 
     var do_update_tool = function(tool_array) {
-        var tool_attribs = ["pb","pb_type","jack","strength_mod","dexterity_mod","constitution_mod","intelligence_mod","wisdom_mod","charisma_mod"];
+        var tool_attribs = ["pb","pb_type","jack","strength_mod","dexterity_mod","constitution_mod","intelligence_mod","wisdom_mod","charisma_mod","sanity_mod"];
         var update = {};
         _.each(tool_array, function(tool_id) {
             tool_attribs.push("repeating_tool_" + tool_id + "_toolbonus_base");
@@ -7061,7 +7142,7 @@
                 var query = false;
                 if(v["repeating_tool_" + tool_id + "_toolattr_base"] && v["repeating_tool_" + tool_id + "_toolattr_base"].substring(0,2) === "?{") {
                     update["repeating_tool_" + tool_id + "_toolattr"] = "QUERY";
-                    var mod = "?{Attribute?|Strength,@{strength_mod}|Dexterity,@{dexterity_mod}|Constitution,@{constitution_mod}|Intelligence,@{intelligence_mod}|Wisdom,@{wisdom_mod}|Charisma,@{charisma_mod}}";
+                    var mod = "?{Attribute?|Strength,@{strength_mod}|Dexterity,@{dexterity_mod}|Constitution,@{constitution_mod}|Intelligence,@{intelligence_mod}|Wisdom,@{wisdom_mod}|Charisma,@{charisma_mod}|Sanity,@{sanity_mod}}";
                     if(v["repeating_tool_" + tool_id + "_tool_mod"]) {
                         mod = mod + "+" + v["repeating_tool_" + tool_id + "_tool_mod"];
                     }
@@ -7191,7 +7272,7 @@
 
     var handle_drop = function(category, eventinfo) {
 
-        getAttrs(["speed", "drop_name", "drop_data", "drop_content", "character_id", "npc_legendary_actions", "strength_mod", "dexterity_mod", "npc", "base_level", "strength_base", "dexterity_base", "constitution_base", "wisdom_base", "intelligence_base", "charisma_base", "class_resource_name", "other_resource_name", "multiclass1_lvl", "multiclass2_lvl", "multiclass3_lvl"], function(v) {
+        getAttrs(["speed", "drop_name", "drop_data", "drop_content", "character_id", "npc_legendary_actions", "strength_mod", "dexterity_mod", "npc", "base_level", "strength_base", "dexterity_base", "constitution_base", "wisdom_base", "intelligence_base", "charisma_base", "sanity_base", "class_resource_name", "other_resource_name", "multiclass1_lvl", "multiclass2_lvl", "multiclass3_lvl"], function(v) {
             var pagedata = {};
             try {
                 pagedata = JSON.parse(v.drop_data);
@@ -7251,6 +7332,9 @@
                     case "CHA":
                         finalAttrib = "@{charisma_mod}";
                         break;
+                    case "SAN":
+                        finalAttrib = "@{sanity_mod}";
+                        break;
                 }
             }
             return finalAttrib;
@@ -7266,7 +7350,7 @@
             return uses_string === "" || uses_string === "-" ? uses_string : total;
         };
         var parseValues = function(uses_string) {
-            var attribs = ["strength", "dexterity", "constitution", "wisdom", "intelligence", "charisma"];
+            var attribs = ["strength", "dexterity", "constitution", "wisdom", "intelligence", "charisma", "sanity"];
             uses_string = uses_string ? uses_string.toLowerCase() : "";
             _.each(attribs, function(attrib) {
                 var attribMod = Math.floor((parseInt(currentData[attrib + "_base"]) - 10) / 2);
@@ -7493,7 +7577,7 @@
             if(page.name && page.name != "") {update["npc_name"] = page.name};
 
             //ABILITY SCORES
-            const npcAbilites = ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"];
+            const npcAbilites = ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma", "sanity"];
             npcAbilites.forEach((ability) => {
                 const abbreviation = ability.slice(0, 3).toUpperCase();
                 update[`${ability}_base`] = (page.data[`${abbreviation}`]) ? page.data[`${abbreviation}`] : "";
@@ -7814,7 +7898,7 @@
                 });
                 if(!existing.toolname) repeating.tool[newrowid] = {toolname: page.name.toLowerCase()}
                 update[`repeating_tool_${newrowid}_toolname`] = page.name;
-                if(!existing.base) update[`repeating_tool_${newrowid}_toolattr_base`] = "?{Attribute?|Strength,@{strength_mod}|Dexterity,@{dexterity_mod}|Constitution,@{constitution_mod}|Intelligence,@{intelligence_mod}|Wisdom,@{wisdom_mod}|Charisma,@{charisma_mod}}";
+                if(!existing.base) update[`repeating_tool_${newrowid}_toolattr_base`] = "?{Attribute?|Strength,@{strength_mod}|Dexterity,@{dexterity_mod}|Constitution,@{constitution_mod}|Intelligence,@{intelligence_mod}|Wisdom,@{wisdom_mod}|Charisma,@{charisma_mod}|Sanity,@{sanity_mod}}";
                 update[`repeating_tool_${newrowid}_options-flag`] = 0;
                 if(page.data["toolbonus_base"]) update[`repeating_tool_${newrowid}_toolbonus_base`] = "(@{pb}*2)";
                 repeating.prof_names.push(page.name.toLowerCase());
@@ -8004,7 +8088,7 @@
                             });
                             if(!existing.toolname) repeating.tool[newrowid] = {toolname: prof.toLowerCase()}
                             update["repeating_tool_" + newrowid + "_toolname"] = prof;
-                            if(!existing.base) update["repeating_tool_" + newrowid + "_toolattr_base"] = "?{Attribute?|Strength,@{strength_mod}|Dexterity,@{dexterity_mod}|Constitution,@{constitution_mod}|Intelligence,@{intelligence_mod}|Wisdom,@{wisdom_mod}|Charisma,@{charisma_mod}}";
+                            if(!existing.base) update["repeating_tool_" + newrowid + "_toolattr_base"] = "?{Attribute?|Strength,@{strength_mod}|Dexterity,@{dexterity_mod}|Constitution,@{constitution_mod}|Intelligence,@{intelligence_mod}|Wisdom,@{wisdom_mod}|Charisma,@{charisma_mod}|Sanity,@{sanity_mod}}";
                             update["repeating_tool_" + newrowid + "_options-flag"] = 0;
                             repeating.prof_names.push(page.name.toLowerCase());
                             callbacks.push( function() {update_tool(newrowid);} );
@@ -8303,6 +8387,7 @@
             if(mod.indexOf("intelligence save") > -1) {update_save("intelligence");} else if(mod.indexOf("intelligence") > -1) {update_attr("intelligence");};
             if(mod.indexOf("wisdom save") > -1) {update_save("wisdom");} else if(mod.indexOf("wisdom") > -1) {update_attr("wisdom");};
             if(mod.indexOf("charisma save") > -1) {update_save("charisma");} else if(mod.indexOf("charisma") > -1) {update_attr("charisma");};
+            if(mod.indexOf("sanity save") > -1) {update_save("sanity");} else if(mod.indexOf("sanity") > -1) {update_attr("sanity");};
             if(mod.indexOf("ability checks") > -1) {update_all_ability_checks();};
             if(mod.indexOf("acrobatics") > -1) {update_skills(["acrobatics"]);};
             if(mod.indexOf("animal handling") > -1) {update_skills(["animal_handling"]);};
@@ -8638,7 +8723,7 @@
     const update_attacks = (update_id, source) => {
         if (update_id.substring(0,1) === "-" && update_id.length === 20) {
             do_update_attack([update_id], source);
-        } else if (["strength","dexterity","constitution","intelligence","wisdom","charisma","spells","all"].indexOf(update_id) > -1) {
+        } else if (["strength","dexterity","constitution","intelligence","wisdom","charisma","sanity","spells","all"].indexOf(update_id) > -1) {
             getSectionIDs("repeating_attack", (idarray) => {
                 if (update_id === "all") {
                     do_update_attack(idarray);
@@ -8685,7 +8770,7 @@
     };
 
     const do_update_attack = (attack_array, source) => {
-        let attack_attribs = ["level","d20","pb","pb_type","pbd_safe","dtype","globalmagicmod","strength_mod","dexterity_mod","constitution_mod","intelligence_mod","wisdom_mod","charisma_mod","spellcasting_ability","spell_save_dc","spell_attack_mod", "spell_dc_mod", "global_damage_mod_roll", "global_damage_mod_crit"];
+        let attack_attribs = ["level","d20","pb","pb_type","pbd_safe","dtype","globalmagicmod","strength_mod","dexterity_mod","constitution_mod","intelligence_mod","wisdom_mod","charisma_mod","sanity_mod","spellcasting_ability","spell_save_dc","spell_attack_mod", "spell_dc_mod", "global_damage_mod_roll", "global_damage_mod_crit"];
         _.each(attack_array, (attackid) => {
             ["atkflag","atkname","atkattr_base","atkmod","atkprofflag","atkmagic","dmgflag","dmgbase","dmgattr","dmgmod","dmgtype","dmg2flag","dmg2base","dmg2attr","dmg2mod","dmg2type","dmgcustcrit","dmg2custcrit","saveflag","savedc","saveeffect","saveflat","hldmg","spellid","spelllevel","atkrange","itemid","ammo",].forEach((attr) => {
                 attack_attribs.push(`repeating_attack_${attackid}_${attr}`)
@@ -9245,7 +9330,7 @@
             }
             else {
                 var update = {};
-                var ac_attrs = ["simpleinventory","custom_ac_base","custom_ac_part1","custom_ac_part2","strength_mod","dexterity_mod","constitution_mod","intelligence_mod","wisdom_mod","charisma_mod", "custom_ac_shield"];
+                var ac_attrs = ["simpleinventory","custom_ac_base","custom_ac_part1","custom_ac_part2","strength_mod","dexterity_mod","constitution_mod","intelligence_mod","wisdom_mod","charisma_mod","sanity_mod", "custom_ac_shield"];
                 getSectionIDs("repeating_acmod", function(acidarray) {
                     _.each(acidarray, function(currentID, i) {
                         ac_attrs.push("repeating_acmod_" + currentID + "_global_ac_val");
@@ -9414,9 +9499,9 @@
     };
 
     const update_class = () => {
-        getAttrs(["class", "base_level","custom_class","cust_hitdietype","cust_spellcasting_ability","cust_strength_save_prof","cust_dexterity_save_prof","cust_constitution_save_prof","cust_intelligence_save_prof","cust_wisdom_save_prof","cust_charisma_save_prof", "npc"], (v) => {
+        getAttrs(["class", "base_level","custom_class","cust_hitdietype","cust_spellcasting_ability","cust_strength_save_prof","cust_dexterity_save_prof","cust_constitution_save_prof","cust_intelligence_save_prof","cust_wisdom_save_prof","cust_charisma_save_prof","cust_sanity_save_prof", "npc"], (v) => {
             if (v.npc && v.npc == "1") { return; }
-            const abilites = ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"];
+            const abilites = ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma", "Sanity"];
             //Custom Classes
             if (v.custom_class && v.custom_class != "0") {
                 update = {};
@@ -9671,7 +9756,7 @@
 
     var update_spell_info = function(attr) {
         var update = {};
-        getAttrs(["spellcasting_ability","spell_dc_mod","globalmagicmod","strength_mod","dexterity_mod","constitution_mod","intelligence_mod","wisdom_mod","charisma_mod"], function(v) {
+        getAttrs(["spellcasting_ability","spell_dc_mod","globalmagicmod","strength_mod","dexterity_mod","constitution_mod","intelligence_mod","wisdom_mod","charisma_mod","sanity_mod"], function(v) {
             if(attr && v["spellcasting_ability"] && v["spellcasting_ability"].indexOf(attr) === -1) {
                 return
             };
@@ -10317,7 +10402,7 @@
     };
 
     var check_l1_mancer = function() {
-        getAttrs(["class", "base_level", "strength_base","dexterity_base","constitution_base","intelligence_base","wisdom_base","charisma_base","l1mancer_status","version","charactermancer_step"], function(v) {
+        getAttrs(["class", "base_level", "strength_base","dexterity_base","constitution_base","intelligence_base","wisdom_base","charisma_base","sanity_base","l1mancer_status","version","charactermancer_step"], function(v) {
             if(!v["version"] || parseFloat(v["version"]) < 2.2) {
                 return;
             }
@@ -10339,7 +10424,7 @@
     };
 
     var check_lp_mancer = function() {
-        getAttrs(["class", "base_level", "strength_base","dexterity_base","constitution_base","intelligence_base","wisdom_base","charisma_base","l1mancer_status", "lpmancer_status","version","charactermancer_step"], function(v) {
+        getAttrs(["class", "base_level", "strength_base","dexterity_base","constitution_base","intelligence_base","wisdom_base","charisma_base","sanity_base","l1mancer_status", "lpmancer_status","version","charactermancer_step"], function(v) {
             if(v["lpmancer_status"] === "active" && v["charactermancer_step"] && v["charactermancer_step"].split("-")[0] == "lp") {
                 startCharactermancer(v["charactermancer_step"]);
             }
@@ -10397,9 +10482,9 @@
     }
 
     var upgrade_to_2_0 = function(doneupdating) {
-        getAttrs(["npc","strength","dexterity","constitution","intelligence","wisdom","charisma","strength_base","dexterity_base","constitution_base","intelligence_base","wisdom_base","charisma_base","deathsavemod","death_save_mod","npc_str_save","npc_dex_save","npc_con_save","npc_int_save","npc_wis_save","npc_cha_save","npc_str_save_base","npc_dex_save_base","npc_con_save_base","npc_int_save_base","npc_wis_save_base","npc_cha_save_base","npc_acrobatics_base", "npc_animal_handling_base", "npc_arcana_base", "npc_athletics_base", "npc_deception_base", "npc_history_base", "npc_insight_base", "npc_intimidation_base", "npc_investigation_base", "npc_medicine_base", "npc_nature_base", "npc_perception_base", "npc_performance_base", "npc_persuasion_base", "npc_religion_base", "npc_sleight_of_hand_base", "npc_stealth_base", "npc_survival_base", "npc_acrobatics", "npc_animal_handling", "npc_arcana", "npc_athletics", "npc_deception", "npc_history", "npc_insight", "npc_intimidation", "npc_investigation", "npc_medicine", "npc_nature", "npc_perception", "npc_performance", "npc_persuasion", "npc_religion", "npc_sleight_of_hand", "npc_stealth", "npc_survival"], function(v) {
+        getAttrs(["npc","strength","dexterity","constitution","intelligence","wisdom","charisma","sanity","strength_base","dexterity_base","constitution_base","intelligence_base","wisdom_base","charisma_base","deathsavemod","death_save_mod","npc_str_save","npc_dex_save","npc_con_save","npc_int_save","npc_wis_save","npc_cha_save","npc_str_save_base","npc_dex_save_base","npc_con_save_base","npc_int_save_base","npc_wis_save_base","npc_cha_save_base","npc_acrobatics_base", "npc_animal_handling_base", "npc_arcana_base", "npc_athletics_base", "npc_deception_base", "npc_history_base", "npc_insight_base", "npc_intimidation_base", "npc_investigation_base", "npc_medicine_base", "npc_nature_base", "npc_perception_base", "npc_performance_base", "npc_persuasion_base", "npc_religion_base", "npc_sleight_of_hand_base", "npc_stealth_base", "npc_survival_base", "npc_acrobatics", "npc_animal_handling", "npc_arcana", "npc_athletics", "npc_deception", "npc_history", "npc_insight", "npc_intimidation", "npc_investigation", "npc_medicine", "npc_nature", "npc_perception", "npc_performance", "npc_persuasion", "npc_religion", "npc_sleight_of_hand", "npc_stealth", "npc_survival"], function(v) {
             var update = {};
-            var stats = ["strength","dexterity","constitution","intelligence","wisdom","charisma"];
+            var stats = ["strength","dexterity","constitution","intelligence","wisdom","charisma","sanity"];
             var npc_stats = ["npc_str_save","npc_dex_save","npc_con_save","npc_int_save","npc_wis_save","npc_cha_save","npc_acrobatics", "npc_animal_handling", "npc_arcana", "npc_athletics", "npc_deception", "npc_history", "npc_insight", "npc_intimidation", "npc_investigation", "npc_medicine", "npc_nature", "npc_perception", "npc_performance", "npc_persuasion", "npc_religion", "npc_sleight_of_hand", "npc_stealth", "npc_survival"];
             _.each(stats, function(attr) {
                 if(v[attr] && v[attr] != "10" && v[attr + "_base"] == "10") {
@@ -10424,6 +10509,7 @@
                     update_mod("intelligence");
                     update_mod("wisdom");
                     update_mod("charisma");
+                    update_mod("sanity");
                     update_npc_action("all");
                     update_npc_saves();
                     update_npc_skills();
@@ -10439,6 +10525,7 @@
                     update_mod("intelligence");
                     update_mod("wisdom");
                     update_mod("charisma");
+                    update_mod("sanity");
                     update_all_saves();
                     update_skills(["athletics", "acrobatics", "sleight_of_hand", "stealth", "arcana", "history", "investigation", "nature", "religion", "animal_handling", "insight", "medicine", "perception", "survival","deception", "intimidation", "performance", "persuasion"]);
                     update_tool("all")
@@ -10518,7 +10605,7 @@
                                                     var spellcasting = traits["repeating_npctrait_" + spellSec + "_desc"].toLowerCase();
                                                     if (v.spellcasting_ability == "0*") {
                                                         var lastIndex = 9999;
-                                                        _.each(["intelligence", "wisdom", "charisma"], function(ability) {
+                                                        _.each(["intelligence", "wisdom", "charisma","sanity"], function(ability) {
                                                             var found = spellcasting.indexOf(ability);
                                                             if(found > -1 && found < lastIndex) {
                                                                 lastIndex = found;
@@ -10829,7 +10916,7 @@
     /*********************************************************************/
 
     var proficiencyList = ["Weapon", "Armor", "Skill", "Tool", "Language"];
-    var abilityList = ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"];
+    var abilityList = ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma","Sanity"];
     var changeListeners = "mancerchange:race_ability_choice1 mancerchange:race_ability_choice2 mancerchange:subrace_ability_choice1 mancerchange:subrace_ability_choice2 mancerchange:custom_hit_die mancerchange:feat_ability_choice";
     var proficiencyNum = 4;
     var customListeners = "";
@@ -11709,7 +11796,7 @@
 
     var recalcPoints = function() {
         data = getCharmancerData();
-        var attribs = ["strength","dexterity","constitution","intelligence","wisdom","charisma"];
+        var attribs = ["strength","dexterity","constitution","intelligence","wisdom","charisma","sanity"];
         var maxPoints = 27;
 
         var scores = {};
@@ -12276,7 +12363,7 @@
     on("mancerchange:abilities", function(eventinfo) {
         var data = getCharmancerData();
         var initHide = ["abilities_possible"];
-        var attribs = ["strength","dexterity","constitution","intelligence","wisdom","charisma"];
+        var attribs = ["strength","dexterity","constitution","intelligence","wisdom","charisma","sanity"];
         var standardArray = ["8", "10", "12", "13", "14", "15"];
         var pointbuyChoices = ["8", "9", "10", "11", "12", "13", "14", "15"];
 
@@ -12326,9 +12413,9 @@
         setAttrs(reset);
     });
 
-    on("mancerchange:strength mancerchange:dexterity mancerchange:constitution mancerchange:intelligence mancerchange:wisdom mancerchange:charisma", function(eventinfo) {
+    on("mancerchange:strength mancerchange:dexterity mancerchange:constitution mancerchange:intelligence mancerchange:wisdom mancerchange:charisma mancerchange:sanity", function(eventinfo) {
         data = getCharmancerData();
-        var attribs = ["strength","dexterity","constitution","intelligence","wisdom","charisma"];
+        var attribs = ["strength","dexterity","constitution","intelligence","wisdom","charisma","sanity"];
         var clearvalue = eventinfo.newValue;
         var clearObject = {
                 strength: data["l1-abilities"].values.strength,
@@ -12336,7 +12423,9 @@
                 constitution: data["l1-abilities"].values.constitution,
                 intelligence: data["l1-abilities"].values.intelligence,
                 wisdom: data["l1-abilities"].values.wisdom,
-                charisma: data["l1-abilities"].values.charisma};
+                charisma: data["l1-abilities"].values.charisma,
+                sanity: data["l1-abilities"].values.sanity,
+            };
 
         if (data["l1-abilities"].values.abilities != "custom" && data["l1-abilities"].values.abilities != "Point Buy") {
             attribs = _.reject(attribs, function(item) { return item == eventinfo.triggerName; });
@@ -12358,7 +12447,7 @@
     });
 
     on("mancerroll:rollstats", function(eventinfo) {
-        var attribs = ["strength","dexterity","constitution","intelligence","wisdom","charisma"];
+        var attribs = ["strength","dexterity","constitution","intelligence","wisdom","charisma","sanity"];
         var results = [];
         var i = 1;
         _.each(eventinfo.roll, function(roll) {
@@ -12375,7 +12464,7 @@
 
     on("clicked:clearstats", function(eventinfo) {
         var data = getCharmancerData();
-        var attribs = ["strength","dexterity","constitution","intelligence","wisdom","charisma"];
+        var attribs = ["strength","dexterity","constitution","intelligence","wisdom","charisma","sanity"];
         reset = {};
         _.each(attribs, function(attrib) {
             reset[attrib] = "";
@@ -14164,7 +14253,7 @@
                 setAttrs({spellinfo: JSON.stringify(spellInfo)});
             });
         });
-        getAttrs(["strength", "strength_mod", "dexterity", "dexterity_mod", "constitution", "constitution_mod", "intelligence", "intelligence_mod", "wisdom", "wisdom_mod", "charisma", "charisma_mod", "strength_maximum", "dexterity_maximum", "constitution_maximum", "intelligence_maximum", "wisdom_maximum", "charisma_maximum"], function(attrs) {
+        getAttrs(["strength", "strength_mod", "dexterity", "dexterity_mod", "constitution", "constitution_mod", "intelligence", "intelligence_mod", "wisdom", "wisdom_mod", "charisma", "charisma_mod", "sanity", "sanity_mod", "strength_maximum", "dexterity_maximum", "constitution_maximum", "intelligence_maximum", "wisdom_maximum", "charisma_maximum", "sanity_maximum"], function(attrs) {
             _.each(attrs, function(x, y) {
                 attrs[y] = parseInt(x);
             });
@@ -16429,6 +16518,10 @@
             <h4 data-i18n="charisma">Charisma</h4>
             <span class="charisma_total">-</span>
         </div>
+        <div class="sheet-attr-container">
+            <h4 data-i18n="sanity">Sanity</h4>
+            <span class="sanity_total">-</span>
+        </div>
     </div>
     <div class="meta-info-container">
         <span class="label"><span data-i18n="hp">Hit Points</span>: <span class="hit_points"></span></span>
@@ -16462,6 +16555,10 @@
         <div class="sheet-attr-container">
             <h4 data-i18n="charisma">Charisma</h4>
             <span class="charisma_total">-</span>
+        </div>
+        <div class="sheet-attr-container">
+            <h4 data-i18n="sanity">Sanity</h4>
+            <span class="sanity_total">-</span>
         </div>
     </div>
     <div class="meta-info-container">
@@ -16646,6 +16743,16 @@
                 </div>
                 <h5 data-i18n="charisma">Charisma</h5>
             </div>
+            <div>
+                <span class="sanity_lock-up lock-up" style="display:none"></span>
+                <span class="sanity_lock-down lock-down" style="display:none">lock</span>
+                <span>+</span><input type="text" name="comp_sanity" value="0" disabled>
+                <div>
+                    <button type="action" class="spinner up-spinner" name="act_sanity_u">+</button>
+                    <button type="action" class="spinner down-spinner" name="act_sanity_d">-</button>
+                </div>
+                <h5 data-i18n="sanity">Sanity</h5>
+            </div>
         </div>
     </div>
     <div class="feat">
@@ -16728,6 +16835,7 @@
                             <option value="intelligence" data-i18n="intelligence">Intelligence</option>
                             <option value="wisdom" data-i18n="wisdom">Wisdom</option>
                             <option value="charisma" data-i18n="charisma">Charisma</option>
+                            <option value="sanity" data-i18n="sanity">Sanity</option>
                         </select>
                         <select class="choice race_possible race_ability_choice2" name="comp_race_ability_choice2">
                             <option value="" data-i18n="choose">Choose</option>
@@ -16737,6 +16845,7 @@
                             <option value="intelligence" data-i18n="intelligence">Intelligence</option>
                             <option value="wisdom" data-i18n="wisdom">Wisdom</option>
                             <option value="charisma" data-i18n="charisma">Charisma</option>
+                            <option value="sanity" data-i18n="sanity">Sanity</option>
                         </select>
                         <label class="choice custom_race"><span data-i18n="strength">Strength:</span>
                             <input class="choice custom_race" type="number" name="comp_race_custom_strength" value="0" min="-5" max="5">
@@ -16755,6 +16864,9 @@
                         </label>
                         <label class="choice custom_race"><span data-i18n="charisma">Charisma:</span>
                             <input class="choice custom_race" type="number" name="comp_race_custom_charisma" value="0" min="-5" max="5">
+                        </label>
+                        <label class="choice custom_race"><span data-i18n="sanity">Sanity:</span>
+                            <input class="choice custom_race" type="number" name="comp_race_custom_sanity" value="0" min="-5" max="5">
                         </label>
                     </label>
                 </div>
@@ -16822,6 +16934,7 @@
                                     <option value="intelligence" data-i18n="intelligence">Intelligence</option>
                                     <option value="wisdom" data-i18n="wisdom">Wisdom</option>
                                     <option value="charisma" data-i18n="charisma">Charisma</option>
+                                    <option value="sanity" data-i18n="sanity">Sanity</option>
                                 </select>
                                 <select class="choice subrace_possible subrace_ability_choice2" name="comp_subrace_ability_choice2">
                                     <option value="" data-i18n="choose">Choose</option>
@@ -16831,6 +16944,7 @@
                                     <option value="intelligence" data-i18n="intelligence">Intelligence</option>
                                     <option value="wisdom" data-i18n="wisdom">Wisdom</option>
                                     <option value="charisma" data-i18n="charisma">Charisma</option>
+                                    <option value="sanity" data-i18n="sanity">Sanity</option>
                                 </select>
                                 <label class="choice custom_subrace">Strength:
                                     <input class="choice custom_subrace" type="number" name="comp_subrace_custom_strength" value="0" min="-5" max="5">
@@ -16849,6 +16963,9 @@
                                 </label>
                                 <label class="choice custom_subrace">Charisma:
                                     <input class="choice custom_subrace" type="number" name="comp_subrace_custom_charisma" value="0" min="-5" max="5">
+                                </label>
+                                <label class="choice custom_subrace">Sanity:
+                                    <input class="choice custom_subrace" type="number" name="comp_subrace_custom_sanity" value="0" min="-5" max="5">
                                 </label>
                             </label>
                         </div>
@@ -16872,6 +16989,7 @@
                                 <option value="Intelligence" data-i18n="intelligence">Intelligence</option>
                                 <option value="Wisdom" data-i18n="wisdom">Wisdom</option>
                                 <option value="Charisma" data-i18n="charisma">Charisma</option>
+                                <option value="Sanity" data-i18n="sanity">Sanity</option>
                             </select>
                         </label>
                         <label class="hilite choice custom_spellcasting">Number of Cantrips:
@@ -16956,6 +17074,7 @@
                             <label><input type="checkbox" name="comp_intelligence_save" value="true">Intelligence</label>
                             <label><input type="checkbox" name="comp_wisdom_save" value="true">Wisdom</label>
                             <label><input type="checkbox" name="comp_charisma_save" value="true">Charisma</label>
+                            <label><input type="checkbox" name="comp_sanity_save" value="true">Sanity</label>
                         </span>
                     </div>
                     <div class="class_holder holder"></div>
@@ -16988,6 +17107,7 @@
                                 <option value="Intelligence" data-i18n="intelligence">Intelligence</option>
                                 <option value="Wisdom" data-i18n="wisdom">Wisdom</option>
                                 <option value="Charisma" data-i18n="charisma">Charisma</option>
+                                <option value="Sanity" data-i18n="sanity">Sanity</option>
                             </select>
                         </label>
                         <label class="hilite choice custom_spellcasting">Number of Cantrips:
@@ -17137,6 +17257,10 @@
                             <span class="label" data-i18n="charisma">Charisma:</span>
                             <span class="abilities_radio_charisma" name="comp_charisma" required></span>
                         </div>
+                        <div>
+                            <span class="label" data-i18n="sanity">Sanity:</span>
+                            <span class="abilities_radio_sanity" name="comp_sanity" required></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -17168,6 +17292,10 @@
                         <div>
                             <span class="label" data-i18n="charisma">Charisma:</span>
                             <input type="number" name="comp_charisma" min="0" max="20" required>
+                        </div>
+                        <div>
+                            <span class="label" data-i18n="sanity">Sanity:</span>
+                            <input type="number" name="comp_sanity" min="0" max="20" required>
                         </div>
                     </div>
                 </div>
